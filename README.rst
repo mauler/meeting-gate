@@ -1,6 +1,6 @@
-=======
-Meeting
-=======
+============
+meeting-gate
+============
 
 .. image:: https://img.shields.io/pypi/v/meeting.svg
         :target: https://pypi.python.org/pypi/meeting
