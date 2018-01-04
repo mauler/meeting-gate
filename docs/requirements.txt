@@ -1,6 +1,0 @@
--r ../requirements.txt
-
-git+https://github.com/mauler/sphinxcontrib-django.git#egg=sphinxcontrib_django
-
-sphinx
-sphinx-autobuild
