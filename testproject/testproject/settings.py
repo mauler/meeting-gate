@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'example',
 
+    'meeting.gate',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

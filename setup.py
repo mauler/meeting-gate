@@ -1,23 +1,25 @@
 from setuptools import setup, find_packages
 
 
-packages = ['meeting.{}'.format(i)
-            for i in find_packages('meeting', exclude=['tests'])]
+packages = ['meeting.gate.{}'.format(i)
+            for i in find_packages('meeting/gate', exclude=['tests'])]
 
 setup(
     name='meeting',
     version=open('VERSION').read().strip(),
-    description='Festival management application: '
-    'Tickets E-Commerce, '
-    'Tickets validation on Lobby (Web, Paper, Guest, '
-    'Local Purchase) and '
-    'Sells on Wristband/Card (Beverage, Food, Souvenir, etc).',
+    description='Festival entrance management application.',
     long_description=open('README.rst').read().strip(),
     author='Paulo R',
     author_email='proberto.macedo@gmail.com',
-    url='http://github.com/mauler/meeting',
+    url='http://github.com/mauler/meeting-gate',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
+    setup_requires=[
+        'pytest-runner',
+    ],
+    tests_require=[
+        'pytest',
+    ],
     install_requires=[
         'django',
         'djangorestframework',

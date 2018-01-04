@@ -1,4 +1,5 @@
 env/*
+.eggs/*
 
 *.py[cod]
 .python-version

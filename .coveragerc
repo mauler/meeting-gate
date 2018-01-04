@@ -2,6 +2,10 @@
 include =
     meeting/*
 branch = True
+omit=
+    manage.py
+    meeting/*/admin.py
+    meeting/*/migrations/*.py
 
 [report]
 # Regexes for lines to exclude from consideration
@@ -31,4 +35,4 @@ ignore_errors = True
 
 [paths]
 source =
-    src/
+    meeting/
