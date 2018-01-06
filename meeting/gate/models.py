@@ -29,10 +29,12 @@ class Wristband(BaseModel):
         null=True,
         max_length=10,
         unique=True,
-        verbose_name=_(u'Pulseira'),
+        verbose_name=_('Pulseira'),
     )
 
-    entry_on = models.DateTimeField(null=True, verbose_name=_('Entrou em'))
+    entry_on = models.DateTimeField(blank=True,
+                                    null=True,
+                                    verbose_name=_('Entrou em'))
 
     wallet_id = models.PositiveIntegerField(
         blank=True,
@@ -52,6 +54,7 @@ class Wristband(BaseModel):
     def save(self, *args, **kwargs):
         if self.entry_on is None and self.wristband_code:
             self.entry_on = timezone.now()
+
         return super().save(*args, **kwargs)
 
 
@@ -61,6 +64,12 @@ class LocalTicket(Wristband):
         verbose_name = _('Ticket Local')
         verbose_name_plural = _('Tickets Locais')
         ordering = ('-entry_on', )
+
+    def save(self, *args, **kwargs):
+        if self.entry_on is None:
+            self.entry_on = timezone.now()
+
+        return super().save(*args, **kwargs)
 
 
 class QRCode(Wristband, RawUUIDModel):
