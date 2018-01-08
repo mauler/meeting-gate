@@ -26,6 +26,7 @@ setup(
     install_requires=[
         'django',
         'djangorestframework',
+        'meeting',
     ],
     zip_safe=False,
     keywords='festival rfid qrcode barcode tickets',
