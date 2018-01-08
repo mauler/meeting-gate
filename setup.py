@@ -28,6 +28,7 @@ setup(
         'djangorestframework',
         'meeting',
     ],
+    dependency_links=['git+https://github.com/mauler/meeting.git#egg=meeting'],
     zip_safe=False,
     keywords='festival rfid qrcode barcode tickets',
     classifiers=[
