@@ -5,7 +5,7 @@ packages = ['meeting.gate.{}'.format(i)
             for i in find_packages('meeting/gate', exclude=['tests'])]
 
 setup(
-    name='meeting',
+    name='meeting-gate',
     version=open('VERSION').read().strip(),
     description='Festival entrance management application.',
     long_description=open('README.rst').read().strip(),
