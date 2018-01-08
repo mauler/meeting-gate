@@ -18,16 +18,16 @@ setup(
         'pytest-runner',
     ],
     tests_require=[
-        'pytest-cov',
+        'pytest',
         'pytest-django',
         'pytest-sugar',
         'pytest-pythonpath',
+        'pytest-cov',
     ],
     install_requires=[
         'django',
         'djangorestframework',
     ],
-    dependency_links=['git+https://github.com/mauler/meeting.git#egg=meeting'],
     zip_safe=False,
     keywords='festival rfid qrcode barcode tickets',
     classifiers=[
