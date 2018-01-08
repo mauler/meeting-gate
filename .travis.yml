@@ -13,11 +13,12 @@ matrix:
 
 # Package installation
 install:
-  - pip install tox coveralls
+  - pip install tox coveralls scrutinizer-ocular
 
 # Run the tests
 script:
   tox
 
 after_success:
-  coveralls
+  - coveralls
+  - ocular --data-file ".coverage" --config-file ".coveragerc"
