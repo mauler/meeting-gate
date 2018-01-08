@@ -13,8 +13,8 @@ matrix:
 
 # Package installation
 install:
-  - pip install tox coveralls scrutinizer-ocular
   - pip install -r requirements.txt
+  - pip install tox coveralls scrutinizer-ocular
 
 
 # Run the tests
