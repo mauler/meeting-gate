@@ -15,8 +15,6 @@ matrix:
 install:
   - pip install -r requirements.txt
   - pip install tox coveralls scrutinizer-ocular
-  - python setup.py install
-
 
 # Run the tests
 script:
