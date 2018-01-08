@@ -26,7 +26,6 @@ setup(
     install_requires=[
         'django',
         'djangorestframework',
-        'meeting',
     ],
     dependency_links=['git+https://github.com/mauler/meeting.git#egg=meeting'],
     zip_safe=False,
