@@ -4,7 +4,9 @@ include =
 branch = True
 omit=
     manage.py
-    meeting/*/admin.py
+    urls.py
+    meeting/*/apps.py
+    meeting/*/urls.py
     meeting/*/migrations/*.py
 
 [report]

@@ -5,8 +5,8 @@ from meeting.gate.models import Wristband, GuestTicket, WebTicket, \
 from meeting.utils.isnull_filter import isnull_filter
 
 
-admin.site.site_header = 'Dark Portal'
-admin.site.site_title = 'darkportal :: admin'
+admin.site.site_header = 'Meeting GATE Application'
+admin.site.site_title = 'meeting-gate :: admin'
 
 
 @admin.register(PaperTicket)
