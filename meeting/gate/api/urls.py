@@ -3,7 +3,7 @@ from django.conf.urls import url
 from meeting.gate.api import views
 
 
-app_name = 'meeting.gate'
+app_name = 'meeting.gate.api'
 
 
 urlpatterns = [

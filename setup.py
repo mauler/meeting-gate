@@ -1,8 +1,11 @@
 from setuptools import setup, find_packages
 
 
-packages = ['meeting.gate.{}'.format(i)
-            for i in find_packages('meeting/gate', exclude=['tests'])]
+packages = ['meeting.gate'] + ['meeting.gate.{}'.format(i)
+                               for i in
+                               find_packages('meeting/gate',
+                                             exclude=['tests'])]
+
 
 setup(
     name='meeting-gate',
@@ -12,7 +15,7 @@ setup(
     author='Paulo R',
     author_email='proberto.macedo@gmail.com',
     url='http://github.com/mauler/meeting-gate',
-    packages=find_packages(exclude=['tests']),
+    packages=packages,
     include_package_data=True,
     setup_requires=[
         'pytest-runner',
