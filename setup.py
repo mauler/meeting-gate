@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'django',
         'djangorestframework',
+        'django-bootstrap3',
     ],
     zip_safe=False,
     keywords='festival rfid qrcode barcode tickets',

@@ -1,3 +1,5 @@
 git+https://github.com/mauler/meeting.git@master
 
 djangorestframework
+
+django-bootstrap3
