@@ -1,0 +1,105 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/sandstone/bootstrap.min.css" %}">
+
+    <style>
+        body {
+          padding-top: 70px;
+        }
+        .starter-template {
+          padding: 40px 15px;
+          text-align: center;
+        }
+    </style>
+
+    <!--jsqrcode-->
+<!--     <script type="text/javascript" src="{% static "jsqrcode/src/grid.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/version.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/detector.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/formatinf.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/errorlevel.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/bitmat.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/datablock.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/bmparser.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/datamask.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/rsdecoder.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/gf256poly.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/gf256.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/decoder.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/qrcode.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/findpat.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/alignpat.js" %}"></script>
+    <script type="text/javascript" src="{% static "jsqrcode/src/databr.js" %}"></script> -->
+
+    <!--
+      <script src="http://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    -->
+
+    <!-- <script src="{% static "html5-qrcode.js" %}?nocache=123"></script> -->
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Gate</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            {% url "meeting-gate:index" as url %}
+            <li {% if url == request.get_full_path %}class="active"{% endif %}><a href="{{ url }}">Entrada</a></li>
+            {% url "meeting-gate:sell" as url %}
+            <li {% if url == request.get_full_path %}class="active"{% endif %}><a href="{{ url }}">Venda</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+        {% block container %}
+            <div id="content" align=""></div>
+        {% endblock %}
+    </div>
+
+    <script src="{% static "jquery.min.js" %}"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{% static "bootstrap.min.js" %}"></script>
+
+    {% block js %}
+        <script src="{% static "react-15.3.2/build/react.js" %}"></script>
+        <script src="{% static "react-15.3.2/build/react-dom.js" %}"></script>
+        <script src="{% static "browser.min.js" %}"></script>
+        <script src="{% static "remarkable.min.js" %}"></script>
+        <script type="text/babel" src="{% static "gate-utils.js" %}"></script>
+        <script type="text/babel" src="{% static "gate.jsx" %}"></script>
+        <script>
+
+        // $(function () {
+        //   $('#reader').html5_qrcode(function(data){
+        //       $("#qrcode").val(data);
+        //     },
+        //     function(error){
+        //       //show read errors
+        //     }, function(videoError){
+        //       //the video stream could be opened
+        //     },
+        //     0
+        //   );
+        // })
+
+        </script>
+    {% endblock %}
+  </body>
+</html>

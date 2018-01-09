@@ -1,0 +1,34 @@
+{% extends "meeting/gate/index.html" %}
+
+{% load bootstrap3 %}
+
+{% block js %}
+    <script>
+        $(function () {
+            $("#id_wristband_code").focus();
+        });
+    </script>
+{% endblock %}
+
+{% block container %}
+
+    {% if form.is_valid %}
+    <div class="alert alert-dismissible alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Pronto!</strong>
+      Pulseira vendida com sucesso.
+    </div>
+    {% endif %}
+
+
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Enviar
+            </button>
+        {% endbuttons %}
+    </form>
+
+{% endblock %}

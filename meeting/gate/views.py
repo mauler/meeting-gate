@@ -4,11 +4,11 @@ from meeting.gate.forms import SellForm
 
 
 def debug_qrcode_input_reader(request):
-    return render(request, 'gate/debug_qrcode_input_reader.html')
+    return render(request, 'meeeing/gate/debug_qrcode_input_reader.html')
 
 
 def index(request):
-    return render(request, 'gate/index.html')
+    return render(request, 'meeting/gate/index.html')
 
 
 def sell(request):
