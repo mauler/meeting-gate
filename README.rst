@@ -29,12 +29,12 @@ For more information, please check:
 
 http://meeting-gate.readthedocs.io/en/latest/
 
+TODO
+----
 
-=================================
-RUNNING AS STANDALONE APPLICATION
-=================================
-
-
-====================================
-RUNNING IN A EXISTING DJANGO PROJECT
-====================================
++ Automated browser tests.
++ Run as standalone application.
++ Docker image available at DockerHub (Uploaded via TravisCI build).
++ Add .jsx processor
++ Add django-compressor
++ Refactory PaperTicket (Add batch insertion)
