@@ -3,3 +3,9 @@ git+https://github.com/mauler/meeting.git@master
 djangorestframework
 
 django-bootstrap3
+
+requests
+
+python-dotenv
+
+dj-database-url
