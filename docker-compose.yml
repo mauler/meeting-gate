@@ -1,0 +1,19 @@
+version: '2'
+services:
+  gate:
+    build: .
+
+    environment:
+      DJANGO_SETTINGS_MODULE: meeting.gate.settings
+      PYTHONPATH: ./
+      STATIC_ROOT: ./static/
+
+    working_dir: /usr/src/app
+
+    command: django-admin runserver 0.0.0.0:8017
+
+    ports:
+     - "8017:8017"
+
+    volumes:
+      - .:/usr/src/app

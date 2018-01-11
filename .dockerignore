@@ -1,0 +1,5 @@
+static/*
+SRC/meeting/build/*
+SRC/meeting/VENV/*
+SRC/meeting/dist/*
+SRC/meeting/.tox/*
