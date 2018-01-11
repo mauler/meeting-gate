@@ -1,0 +1,8 @@
+pytest
+pytest-cov
+pytest-django
+pytest-pythonpath
+pytest-splinter
+pytest-sugar
+
+-r requirements.txt

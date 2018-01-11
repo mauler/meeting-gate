@@ -23,6 +23,7 @@ setup(
     tests_require=[
         'pytest',
         'pytest-django',
+        'pytest-splinter',
         'pytest-sugar',
         'pytest-pythonpath',
         'pytest-cov',
