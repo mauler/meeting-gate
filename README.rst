@@ -32,6 +32,8 @@ http://meeting-gate.readthedocs.io/en/latest/
 TODO
 ----
 
++ Freeze vesions and upload to pypi
++ Docs for Models, Api, Install Instructions, Docker Image, pip install.
 + Automated browser tests.
 + Run as standalone application.
 + Docker image available at DockerHub (Uploaded via TravisCI build).
