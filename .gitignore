@@ -1,3 +1,13 @@
+static/
+
+.env
+
+*.db.sqlite
+
+geckodriver.log
+ghostdriver.log
+
+SRC/*
 VENV/*
 .eggs/*
 
