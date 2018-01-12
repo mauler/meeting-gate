@@ -11,6 +11,7 @@ ghostdriver.log
 
 SRC/*
 VENV/*
+venv/*
 .eggs/*
 
 *.py[cod]
