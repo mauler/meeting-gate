@@ -27,6 +27,7 @@ setup(
         'pytest-sugar',
         'pytest-pythonpath',
         'pytest-cov',
+        'pytest-mocker',
     ],
     install_requires=[
         'django',
