@@ -12,10 +12,12 @@ class WristbandApiTest(APITestCase):
 
     def setUp(self):
         super().setUp()
-        self.wband = Wristband.objects.create(wristband_code=self.WRISTBAND_CODE)
+        self.wband = \
+            Wristband.objects.create(wristband_code=self.WRISTBAND_CODE)
 
     def test_wristband_detail(self):
-        url = reverse('meeting-gate:api:wristband_detail', args=(self.WRISTBAND_CODE, ))
+        url = reverse('meeting-gate:api:wristband_detail',
+                      args=(self.WRISTBAND_CODE, ))
         r = self.client.get(url)
         self.assertEqual(r.status_code, status.HTTP_200_OK)
 
@@ -34,12 +36,15 @@ class QRCodeApiTest(APITestCase):
     GUEST_NAME = 'guitarrist'
     GUEST_DOCUMENT = '666'
 
+    WRISTBAND_CODE = 'abc123'
+
     def setUp(self):
         super().setUp()
 
-        self.guesttkt = GuestTicket.objects.create(list_name=self.GUEST_LIST_NAME,
-                                                   person_name=self.GUEST_NAME,
-                                                   person_document=self.GUEST_DOCUMENT)
+        self.guesttkt = GuestTicket.objects.create(
+            list_name=self.GUEST_LIST_NAME,
+            person_name=self.GUEST_NAME,
+            person_document=self.GUEST_DOCUMENT)
 
         self.papertkt = PaperTicket.objects.create(batch_name=self.BATCH_NAME,
                                                    batch_line=self.BATCH_LINE)
@@ -50,13 +55,20 @@ class QRCodeApiTest(APITestCase):
             buyer_name=self.BUYER_NAME,
             buyer_email=self.BUYER_EMAIL)
 
+    def test_access_update(self):
+        url = reverse('meeting-gate:api:access_update',
+                      args=(self.webtkt.uuid, ))
+        r = self.client.put(url, {'wristband_code': self.WRISTBAND_CODE})
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+
     def test_api_qrcode_detail_404(self):
         url = reverse('meeting-gate:api:qrcode_detail', args=('123456', ))
         r = self.client.get(url)
         self.assertEqual(r.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_api_web_ticket_detail(self):
-        url = reverse('meeting-gate:api:qrcode_detail', args=(self.webtkt.uuid, ))
+        url = reverse('meeting-gate:api:qrcode_detail',
+                      args=(self.webtkt.uuid, ))
         r = self.client.get(url)
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(r.data['web_ticket'],
@@ -66,7 +78,8 @@ class QRCodeApiTest(APITestCase):
                           'buyer_name': self.BUYER_NAME})
 
     def test_api_paper_ticket_detail(self):
-        url = reverse('meeting-gate:api:qrcode_detail', args=(self.papertkt.uuid, ))
+        url = reverse('meeting-gate:api:qrcode_detail',
+                      args=(self.papertkt.uuid, ))
         r = self.client.get(url)
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(r.data['paper_ticket'],
@@ -74,7 +87,8 @@ class QRCodeApiTest(APITestCase):
                           'batch_line': self.BATCH_LINE})
 
     def test_api_guest_ticket_detail(self):
-        url = reverse('meeting-gate:api:qrcode_detail', args=(self.guesttkt.uuid, ))
+        url = reverse('meeting-gate:api:qrcode_detail',
+                      args=(self.guesttkt.uuid, ))
         r = self.client.get(url)
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(r.data['guest_ticket'],

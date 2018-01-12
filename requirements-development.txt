@@ -1,6 +1,7 @@
 pytest
 pytest-cov
 pytest-django
+pytest-mock
 pytest-pythonpath
 pytest-splinter
 pytest-sugar
