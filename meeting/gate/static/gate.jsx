@@ -185,6 +185,49 @@ function ReadQRCodeMsg(props) {
   );
 }
 
+class InputReader extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    // this.load_access = this.load_access.bind(this);
+  }
+
+  componentDidMount() {
+    this.readerInput.focus();
+  }
+
+  render() {
+    return (
+        <div>
+          <input
+            autoFocus
+            onBlur={this.onBlur}
+            onKeyPress={this.onKeyPress}
+            type="text"
+            ref={input => { this.readerInput = input; }}
+            placeholder="Reader ..." />
+        </div>
+    );
+  }
+
+  onKeyPress (e) {
+    var code = e.keyCode || e.which;
+    // 13 is ENTER
+    if (code == 13) {
+      var line = e.currentTarget.value;
+      __input_reader.process_line(e.currentTarget.value);
+      e.currentTarget.value = '';
+    }
+    return true;
+  };
+
+  onBlur (e) {
+    e.currentTarget.focus();
+  }
+
+}
+
 class QRCodeBox extends React.Component {
 
   constructor(props) {
@@ -660,6 +703,8 @@ class Content extends React.Component {
     return (
       <div>
 
+        <InputReader />
+
         <Input
           has={this.state.qrcode_input.has}
           label="QRCode"
@@ -713,7 +758,7 @@ class Content extends React.Component {
 
 $(function () {
 
-  var window_focus;
+  // var window_focus;
 
   // $(window).focus(function() {
   //     window_focus = true;
@@ -724,30 +769,30 @@ $(function () {
   //   $(window).focus();
   // });
 
-  $(window).focus();
+  // $(window).focus();
 
   var app = {
     input: {},
 
     init: function () {
-      var line = '';
-      document.onkeyup = function (e) {
-        var chr = String.fromCharCode(e.which);
+      // var line = '';
+      // document.onkeyup = function (e) {
+      //   var chr = String.fromCharCode(e.which);
 
-        if (e.code == "Enter") {
-          // NOTE: For some reason the "-" minus character from the qrcode
-          // reader comes 1/4 character
-          line = line.replace(/[^a-zA-Z0-9]/g,'-')
-          // NOTE: Ensure is lower case (qrcode reader isn't reading as lower)
-          line = line.toLowerCase();
-          app.process_line(line);
-          line = '';
-        }
-        else {
-          line += chr;
-        }
+      //   if (e.code == "Enter") {
+      //     // NOTE: For some reason the "-" minus character from the qrcode
+      //     // reader comes 1/4 character
+      //     line = line.replace(/[^a-zA-Z0-9]/g,'-')
+      //     // NOTE: Ensure is lower case (qrcode reader isn't reading as lower)
+      //     line = line.toLowerCase();
+      //     app.process_line(line);
+      //     line = '';
+      //   }
+      //   else {
+      //     line += chr;
+      //   }
 
-      };
+      // };
       this.render();
       return this;
     },
