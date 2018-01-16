@@ -1,89 +1,123 @@
-// tutorial1.js
-var CommentBox = React.createClass({
-  render: function() {
-    return (
-      <div className="commentBox">
-        Hello, world! I am a CommentBox.
-      </div>
-    );
-  }
-});
+var InputReaderApp = {
+  input: {},
 
-var CommentList = React.createClass({
-  render: function() {
-    return (
-      <div className="commentList">
-        <Comment author="Pete Hunt">This is one comment</Comment>
-        <Comment author="Jordan Walke">This is *another* comment</Comment>
-      </div>
-    );
-  }
-});
+  init: function () {
+    // var line = '';
+    // document.onkeyup = function (e) {
+    //   var chr = String.fromCharCode(e.which);
 
-var CommentForm = React.createClass({
-  render: function() {
-    return (
-      <div className="commentForm">
-        Hello, world! I am a CommentForm.
-      </div>
-    );
-  }
-});
+    //   if (e.code == "Enter") {
+    //     // NOTE: For some reason the "-" minus character from the qrcode
+    //     // reader comes 1/4 character
+    //     line = line.replace(/[^a-zA-Z0-9]/g,'-')
+    //     // NOTE: Ensure is lower case (qrcode reader isn't reading as lower)
+    //     line = line.toLowerCase();
+    //     app.process_line(line);
+    //     line = '';
+    //   }
+    //   else {
+    //     line += chr;
+    //   }
 
-// tutorial4.js
-var Comment = React.createClass({
-  render: function() {
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-      </div>
-    );
-  }
-});
-
-// tutorial19.js
-var CommentForm = React.createClass({
-  getInitialState: function() {
-    return {author: '', text: ''};
+    // };
+    this.render();
+    return this;
   },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var author = this.state.author.trim();
-    var text = this.state.text.trim();
-    if (!text || !author) {
-      return;
+
+  process_line: function (line) {
+
+    // console.debug("line", line);
+    // console.debug("length", line.length);
+
+    console.debug((this.input.qrcode));
+
+    if (this.input.qrcode) {
+      if (is_wristband(line)) {
+        this.input.wristband = line;
+      }
     }
-    this.props.onCommentSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
+    else {
+      if (is_ticket_qrcode(line)) {
+        this.input.qrcode = line;
+      }
+    }
+
+    // if (this.input.qrcode) {
+    //   this.render();
+    // }
+
+    // if (this.input.wristband) {
+    //   this.render();
+    // }
+
+    this.render();
+
+    // if (this.line == '') {
+    //   this.render();
+    // }
+
+    // console.debug("input", this.input);
+
   },
-  render: function() {
+
+  destroy: function () {
+    this.input = {};
+    $("#content").html("");
+    return this;
+  },
+
+  render: function () {
+    // console.debug('render input', this.input);
+    ReactDOM.render(
+      <Content qrcode={this.input.qrcode} wristband={this.input.wristband} />,
+      document.getElementById('content')
+    );
+  },
+
+};
+
+class InputReader extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    // this.load_access = this.load_access.bind(this);
+  }
+
+  componentDidMount() {
+    this.readerInput.focus();
+  }
+
+  render() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
-        <input
-          type="text"
-          placeholder="Say something..."
-          value={this.state.text}
-          onChange={this.handleTextChange}
-        />
-        <input type="submit" value="Post" />
-      </form>
+        <div>
+          <input
+            autoFocus
+            onBlur={this.onBlur}
+            onKeyPress={this.onKeyPress}
+            type="text"
+            ref={input => { this.readerInput = input; }}
+            placeholder="Reader ..." />
+        </div>
     );
   }
-});
+
+  onKeyPress (e) {
+    var code = e.keyCode || e.which;
+    // 13 is ENTER
+    if (code == 13) {
+      var line = e.currentTarget.value.trim();
+      __input_reader.process_line(line);
+      e.currentTarget.value = '';
+    }
+    return true;
+  };
+
+  onBlur (e) {
+    e.currentTarget.focus();
+  }
+
+}
 
 // Gate
 
@@ -185,49 +219,6 @@ function ReadQRCodeMsg(props) {
   );
 }
 
-class InputReader extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-    // this.load_access = this.load_access.bind(this);
-  }
-
-  componentDidMount() {
-    this.readerInput.focus();
-  }
-
-  render() {
-    return (
-        <div>
-          <input
-            autoFocus
-            onBlur={this.onBlur}
-            onKeyPress={this.onKeyPress}
-            type="text"
-            ref={input => { this.readerInput = input; }}
-            placeholder="Reader ..." />
-        </div>
-    );
-  }
-
-  onKeyPress (e) {
-    var code = e.keyCode || e.which;
-    // 13 is ENTER
-    if (code == 13) {
-      var line = e.currentTarget.value;
-      __input_reader.process_line(e.currentTarget.value);
-      e.currentTarget.value = '';
-    }
-    return true;
-  };
-
-  onBlur (e) {
-    e.currentTarget.focus();
-  }
-
-}
-
 class QRCodeBox extends React.Component {
 
   constructor(props) {
@@ -252,7 +243,7 @@ class QRCodeBox extends React.Component {
 
   load_access() {
     var self = this;
-    var url = "/api/ʋ666/qrcode/" + this.props.qrcode;
+    var url = GATE_API_URL + "/qrcode/" + this.props.qrcode;
     $.get(url, 'json').done(function (data) {
 
       self.setState({access: data})
@@ -313,7 +304,7 @@ class WristbandBox extends React.Component {
 
   load_wristband() {
     var self = this;
-    var url = "/api/ʋ666/wristband/" + this.props.wristband;
+    var url = GATE_API_URL + "/wristband/" + this.props.wristband;
     $.get(url, 'json').done(function (data) {
 
       self.setState({wristband: data})
@@ -382,7 +373,7 @@ class Gate extends React.Component {
 
   // load_access() {
   //   var self = this;
-  //   var url = "/api/access/" + this.props.qrcode;
+  //   var url = GATE_API_URL + "/access/" + this.props.qrcode;
   //   $.ajax({
   //     url: url,
   //     dataType: 'json',
@@ -526,7 +517,7 @@ class Content extends React.Component {
 
     if ((this.state.qrcode_valid) && (this.state.wristband_valid)) {
       if (confirm("Aperte ENTER para confirmar a entrada:")) {
-        var url = "/api/ʋ666/entry/" + this.props.qrcode + "/";
+        var url = GATE_API_URL + "/entry/" + this.props.qrcode + "/";
         var params = {wristband_code: this.props.wristband};
 
         $.ajax({
@@ -614,7 +605,7 @@ class Content extends React.Component {
 
   load_access() {
     var self = this;
-    var url = "/api/ʋ666/qrcode/" + this.props.qrcode;
+    var url = GATE_API_URL + "/qrcode/" + this.props.qrcode;
 
     self.setState({
       qrcode_alert: null
@@ -676,7 +667,7 @@ class Content extends React.Component {
 
   load_wristband() {
     var self = this;
-    var url = "/api/wristband/" + this.props.wristband;
+    var url = GATE_API_URL + "/wristband/" + this.props.wristband;
 
     self.setState({
       wristband_alert: null
@@ -771,79 +762,7 @@ $(function () {
 
   // $(window).focus();
 
-  var app = {
-    input: {},
-
-    init: function () {
-      // var line = '';
-      // document.onkeyup = function (e) {
-      //   var chr = String.fromCharCode(e.which);
-
-      //   if (e.code == "Enter") {
-      //     // NOTE: For some reason the "-" minus character from the qrcode
-      //     // reader comes 1/4 character
-      //     line = line.replace(/[^a-zA-Z0-9]/g,'-')
-      //     // NOTE: Ensure is lower case (qrcode reader isn't reading as lower)
-      //     line = line.toLowerCase();
-      //     app.process_line(line);
-      //     line = '';
-      //   }
-      //   else {
-      //     line += chr;
-      //   }
-
-      // };
-      this.render();
-      return this;
-    },
-
-    process_line: function (line) {
-
-      // console.debug("line", line);
-      // console.debug("length", line.length);
-
-      if (is_wristband(line)) {
-        this.input.wristband = line;
-      }
-      else if (is_ticket_qrcode(line)) {
-        this.input.qrcode = line;
-      }
-
-      // if (this.input.qrcode) {
-      //   this.render();
-      // }
-
-      // if (this.input.wristband) {
-      //   this.render();
-      // }
-
-      this.render();
-
-      // if (this.line == '') {
-      //   this.render();
-      // }
-
-      // console.debug("input", this.input);
-
-    },
-
-    destroy: function () {
-      this.input = {};
-      $("#content").html("");
-      return this;
-    },
-
-    render: function () {
-      // console.debug('render input', this.input);
-      ReactDOM.render(
-        <Content qrcode={this.input.qrcode} wristband={this.input.wristband} />,
-        document.getElementById('content')
-      );
-    },
-
-  };
-
-  window.__input_reader = app.init();
+  window.__input_reader = InputReaderApp.init();
 
   // __input_reader.process_line("a");
 
