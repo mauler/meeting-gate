@@ -1,3 +1,5 @@
+window.GATE_API_URL = '/api/ʋ666'
+
 window.is_ticket_qrcode = function (s) {
   return ((s.length == 1) ||
           /^\d+$/.test(s) ||
