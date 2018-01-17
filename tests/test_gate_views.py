@@ -14,6 +14,12 @@ class ViewsTestCase(TestCase):
         response = self.client.post(url,
                                     {'wristband_code': self.WRISTBAND_CODE})
         self.assertEqual(response.status_code, 200)
+        self.assertNotIn('WBAND_CODE_EXISTS', response.content)
+
+        response = self.client.post(url,
+                                    {'wristband_code': self.WRISTBAND_CODE})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('WBAND_CODE_EXISTS', response.content)
 
     def test_index(self):
         response = self.client.get(reverse('meeting-gate:index'))

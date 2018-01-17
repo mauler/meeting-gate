@@ -5,12 +5,16 @@
 {% block js %}
     <script>
         $(function () {
-            $("#id_wristband_code").focus();
+            $("#id_wristband_code").on('blur', function () {
+                this.focus();
+            });
         });
     </script>
 {% endblock %}
 
 {% block container %}
+
+    {% bootstrap_messages %}
 
     {% if form.is_valid %}
     <div class="alert alert-dismissible alert-success">

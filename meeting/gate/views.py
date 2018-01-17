@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 
 from meeting.gate.forms import SellForm
@@ -15,5 +16,9 @@ def sell(request):
     form = SellForm(request.POST or None)
     if form.is_valid():
         form.save()
+        form = SellForm()
+        messages.success(request, 'Pulseira vendida com sucesso.')
+    else:
+        messages.warning(request, 'Algo esta incorreto.')
 
     return render(request, 'meeting/gate/sell.html', {'form': form})
