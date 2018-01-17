@@ -16,6 +16,4 @@ def sync_wristband_wallet(wristband_code, entry_on, ticket, qrcode=None):
     if r.status_code != status.HTTP_200_OK:
         return None
 
-    data = r.json()
-
-    return data['id']
+    return r.json()

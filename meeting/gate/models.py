@@ -47,6 +47,8 @@ class Wristband(BaseModel):
         verbose_name=_('ID Carteira')
     )
 
+    wallet_info = models.TextField(blank=True)
+
     shop_created_on = models.DateTimeField(verbose_name=_('Comprado em'),
                                            blank=True,
                                            null=True)

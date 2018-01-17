@@ -45,13 +45,14 @@ class LocalTicketAdmin(admin.ModelAdmin):
     list_display = ('wristband_code',
                     'entry_on',
                     'wallet_id',
+                    'wallet_info',
                     'shop_created_on', )
     list_filter = (
         isnull_filter('wallet_id'),
         'entry_on',
         'shop_created_on',
     )
-    search_fields = ('=wristband_code', )
+    search_fields = ('=wristband_code', 'wallet_info', )
 
 
 @admin.register(GuestTicket)
