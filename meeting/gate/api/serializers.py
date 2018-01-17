@@ -37,7 +37,8 @@ class QRCodeSerializer(serializers.ModelSerializer):
                   'wristband_code',
                   'entry_on',
                   'wallet_id',
-                  'shop_created_on', )
+                  'shop_created_on',
+                  'qrcode_requires_identification', )
         model = models.QRCode
 
     def get_web_ticket(self, qrcode):
