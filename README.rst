@@ -29,9 +29,55 @@ For more information, please check:
 
 http://meeting-gate.readthedocs.io/en/latest/
 
+TOPICS
+------
+
+Our project Wristand is 10 character length, containing only numbers. Regular Expression: ^\d{10}$
+
+
+Caso de Uso (Procurar README de projetos similares e olhar os tópicos)
+
+Como o sistema comunica com outros 2
+
+História, Foi criado para controlar entrada do meeting-festival
+
+Ele lê tickets do meeting-shop porém é possível usar tickets de outros sistemas
+
+Formas de instalação do sistema
+
+Instalar via pip e executar sem um projeto
+
+Instalar via pip no seu projeto existente
+
+Instalar e testar por imagem do dockerhub
+
+Carregando WebTickets, meeting-shop e ou/outro sistema
+
+Carregando LocalTickets/Lote (Recriar a aplicação)
+
+Frontend de Leitura de QRCodes (origundos do meeting-shop ou não)
+formato atual configurado de pulseira
+
+Possíveis erros
+
+Rotina para atualizar a Wristband no meeting-gate
+
+O uso do admin
+
+API dos Models
+
+Como Contribuir
+
+Usando o docker-compose para testar, testando o navegador também
+
+Testando navegador (Sem uso do Docker-compose)
+
+
 TODO
 ----
 
++ Enable Pull Request interaction with Travis CI
++ Create list of errors, use them on browser tests
 + Freeze vesions and upload to pypi
 + Docs for Models, Api, Install Instructions, Docker Image, pip install.
 + Automated browser tests.
