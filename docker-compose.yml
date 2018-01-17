@@ -7,6 +7,8 @@ services:
       DJANGO_SETTINGS_MODULE: meeting.gate.settings
       PYTHONPATH: ./
       STATIC_ROOT: ./static/
+      PYTHONDONTWRITEBYTECODE: IS_SET
+
 
     working_dir: /usr/src/app
 
@@ -14,6 +16,20 @@ services:
 
     ports:
      - "8017:8017"
+
+    volumes:
+      - .:/usr/src/app
+
+  test:
+    build: .
+
+    environment:
+      DJANGO_SETTINGS_MODULE: testproject.settings
+      PYTHONDONTWRITEBYTECODE: IS_SET
+
+    working_dir: /usr/src/app
+
+    command: python setup.py test
 
     volumes:
       - .:/usr/src/app

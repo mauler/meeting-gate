@@ -1,5 +1,7 @@
 FROM python:3
 
+RUN pip install pytest pytest-django pytest-splinter pytest-sugar pytest-pythonpath pytest-cov
+
 RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
@@ -14,8 +16,12 @@ VOLUME ["/var/www/media"]
 
 COPY . .
 
-ENV PYTHONPATH .
-
 ENV DJANGO_SETTINGS_MODULE meeting.gate.settings
+
+ENV STATIC_ROOT /usr/src/static
+
+ENV MEDIA_ROOT /var/www/media
+
+ENV PYTHONPATH .
 
 RUN django-admin collectstatic
