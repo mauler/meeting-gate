@@ -23,6 +23,10 @@ class PersonModel(models.Model):
 
 
 class Wristband(BaseModel):
+    # WBAND_CREATED = 'Pulseira registrada com sucesso.'
+    WBAND_CODE_EXISTS = ('WBAND_CODE_EXISTS: Esta pulseira já foi registrada '
+                         'em nosso sistema.')
+
     wristband_code = models.CharField(
         blank=True,
         db_index=True,
@@ -30,6 +34,7 @@ class Wristband(BaseModel):
         max_length=10,
         unique=True,
         verbose_name=_('Pulseira'),
+        error_messages={'unique': WBAND_CODE_EXISTS}
     )
 
     entry_on = models.DateTimeField(blank=True,
