@@ -1,1 +1,3 @@
 include VERSION
+recursive-include meeting/gate/templates/ *
+recursive-include meeting/gate/static/ *
