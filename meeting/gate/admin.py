@@ -15,7 +15,9 @@ class PaperTicketAdmin(admin.ModelAdmin):
     list_display = ('batch_name', 'batch_line',
                     'uuid',
                     'wristband_code',
-                    'entry_on', 'wallet_id', )
+                    'entry_on',
+                    'shop_created_on',
+                    'wallet_id', )
     list_filter = (
         'entry_on',
         isnull_filter('wallet_id'),
@@ -40,7 +42,10 @@ class WristbandAdmin(admin.ModelAdmin):
 @admin.register(LocalTicket)
 class LocalTicketAdmin(admin.ModelAdmin):
     date_hierarchy = 'entry_on'
-    list_display = ('wristband_code', 'entry_on', 'wallet_id', )
+    list_display = ('wristband_code',
+                    'entry_on',
+                    'wallet_id',
+                    'shop_created_on', )
     list_filter = (
         isnull_filter('wallet_id'),
         'entry_on',
