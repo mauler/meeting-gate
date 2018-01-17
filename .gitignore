@@ -1,6 +1,6 @@
 tests.*
 
-static/
+static/*
 
 .env
 
