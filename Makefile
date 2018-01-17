@@ -29,3 +29,7 @@ clean:
 .PHONY: docs
 docs:
 	$(SPHINXBUILD) $(ALLSPHINXOPTS) $(BUILDDIR)
+
+.PHONY: test
+test:
+	docker-compose run --rm test
