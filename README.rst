@@ -34,6 +34,8 @@ TOPICS
 
 Our project Wristand is 10 character length, containing only numbers. Regular Expression: ^\d{10}$
 
+The reason there is not auth (API and Views) it's because we used the application
+on a private local area network, no internet connection or outside access. Actually most of the time totally offline since the festival gate was in a farm gate.
 
 Caso de Uso (Procurar README de projetos similares e olhar os tópicos)
 
