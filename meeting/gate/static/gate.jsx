@@ -117,6 +117,7 @@ class Input extends React.Component {
   }
 
   reset() {
+    this.setState({placeholder: ''});
     this.inputElement.value = '';
     this.setStatus(null);
     this.setIcon(null);
@@ -156,12 +157,13 @@ class Input extends React.Component {
       <div className={this.state.className}>
         <label className="control-label" htmlFor={this.props.input_id}>{this.props.label}</label>
         <div className="input-group">
+
           <span className="input-group-addon">
-
-          <span className={this.input_icon_class_name} aria-hidden="true"></span>
-
+            <span className={this.input_icon_class_name} aria-hidden="true"></span>
           </span>
+
           <input
+            onBlur={this.props.onBlur}
             ref={(input) => { this.inputElement = input; }}
             type="text"
             className="form-control"
@@ -169,6 +171,7 @@ class Input extends React.Component {
             aria-describedby={this.input_status_id}
             placeholder={this.state.placeholder}
             />
+
         </div>
         <span
           className={this.state.iconClassName}
@@ -182,19 +185,22 @@ class Input extends React.Component {
 class QRCodeInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {info: {}};
+    this.state = {};
   }
 
   setInfo(info={}) {
+    // window.console.trace(info);
     this.setState({info: info});
-    if (info.entry_on) {
-      this.setState({row_qrcode_classname: 'danger'});
-    }
-    else if ((! info.web_ticket) && (! info.guest_ticket) && (! info.paper_ticket)) {
-      this.setState({row_qrcode_classname: 'warning'});
-    }
-    else {
-      this.setState({row_qrcode_classname: 'success'});
+    if (info) {
+      if (info.entry_on) {
+        this.setState({row_qrcode_classname: 'danger'});
+      }
+      else if ((! info.web_ticket) && (! info.guest_ticket) && (! info.paper_ticket)) {
+        this.setState({row_qrcode_classname: 'warning'});
+      }
+      else {
+        this.setState({row_qrcode_classname: 'success'});
+      }
     }
   }
 
@@ -202,7 +208,7 @@ class QRCodeInfo extends React.Component {
     return (
       <div>
 
-        { this.state.info.uuid ?
+        { this.state.info ?
           <div className="jumbotron">
             <h2>Informações do QRCode</h2>
             <table className="table table-bordered table-striped">
@@ -222,7 +228,7 @@ class QRCodeInfo extends React.Component {
                 { this.state.info.entry_on ?
                   <tr>
                     <th>
-                      <span style={{fontSize: '48px'}} className="glyphicon glyphicon-tent" aria-hidden="true"></span>
+                      <span style={{'fontSize': '48px'}} className="glyphicon glyphicon-tent" aria-hidden="true"></span>
                     </th>
                     <td>
                       <p>
@@ -271,6 +277,49 @@ class QRCodeInfo extends React.Component {
   }
 }
 
+class WBandInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  setInfo(info={}) {
+    this.setState({info: info});
+    if (info) {
+      if (info.entry_on) {
+        this.setState({row_qrcode_classname: 'danger'});
+      }
+      else if ((! info.web_ticket) && (! info.guest_ticket) && (! info.paper_ticket)) {
+        this.setState({row_qrcode_classname: 'warning'});
+      }
+      else {
+        this.setState({row_qrcode_classname: 'success'});
+      }
+    }
+  }
+
+  render() {
+
+    return (
+      <div>
+
+        { this.state.info ?
+            <div>
+              { (! this.state.info.entry_on) ?
+                <p></p>
+                :
+                null
+              }
+            </div>
+          :
+          null
+        }
+
+      </div>
+    );
+  }
+}
+
 class Message extends React.Component {
 
   constructor(props) {
@@ -284,7 +333,15 @@ class Message extends React.Component {
 
   setCode(message_code, ) {
 
-    if (message_code == 'QRCODE_NOT_FOUND') {
+    if (message_code == 'WRISTBAND_ALREADY_USED') {
+      this.setState({
+        code: message_code,
+        alert: 'danger',
+        title: 'Pulseira já foi usada!',
+        message: 'Esta puĺseira já foi usada anteriormente.'
+      });
+    }
+    else if (message_code == 'QRCODE_NOT_FOUND') {
       this.setState({
         code: message_code,
         alert: 'warning',
@@ -330,9 +387,13 @@ class Gate extends React.Component {
       qrcode: null,
       wristband: null
     };
+    this.inputOnBlur = this.inputOnBlur.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.check_qrcode_found = this.check_qrcode_found.bind(this);
     this.check_qrcode_not_found = this.check_qrcode_not_found.bind(this);
+    this.check_wband_found = this.check_wband_found.bind(this);
+    this.check_wband_not_found = this.check_wband_not_found.bind(this);
+    this.confirm = this.confirm.bind(this);
   }
 
   componentDidMount() {
@@ -343,9 +404,36 @@ class Gate extends React.Component {
   clear() {
     this.wbandInput.reset();
     this.qrcodeInput.reset();
-    this.qrcodeInfo.setInfo();
+    this.qrcodeInfo.setInfo(null);
     this.qrcodeMessage.setCode(null);
     this.qrcodeInput.inputElement.focus();
+  }
+
+  confirm() {
+    var self = this;
+    if ((! this.qrcodeInfo.state.info.entry_on) &&
+        (! this.wbandInfo.state.info.entry_on)) {
+      if (confirm("Aperte ENTER para confirmar a entrada:")) {
+        var url = "/api/ʋ666/entry/" + this.qrcodeInput.inputElement.value + '/';
+        var params = {wristband_code: this.wbandInput.inputElement.value};
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: params,
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          success: function (data) {
+            alert("Entrada CONFIRMADA");
+            self.clear();
+          },
+          dataType: 'json'
+        });
+      }
+      else {
+        self.clear();
+      }
+    }
   }
 
   check_qrcode_not_found(xhr) {
@@ -366,22 +454,66 @@ class Gate extends React.Component {
       this.wbandInput.inputElement.focus();
     }
     else {
-      this.qrcodeInput.setState({
-        placeholder: this.wbandInput.inputElement.value});
-      // this.wbandInput.inputElement.value = '';
       this.clear();
       this.qrcodeInput.setError();
       this.qrcodeMessage.setCode('QRCODE_ALREADY_USED');
     }
 
     this.qrcodeInfo.setInfo(data);
-    // self.ask();
   }
 
   check_qrcode(success_callback, fail_callback) {
     this.qrcodeInfo.setState({data: {uuid: this.qrcodeInput.inputElement.value}});
     var url = GATE_API_URL + "/qrcode/" + this.qrcodeInput.inputElement.value;
     $.get(url, 'json').done(this.check_qrcode_found).fail(this.check_qrcode_not_found);
+  }
+
+  check_wband_not_found(xhr) {
+    if (xhr.status == 404) {
+      this.wbandInput.setSuccess();
+      this.wbandMessage.setCode(null);
+      this.wbandInfo.setInfo({wristband_code: this.wbandInput.inputElement.value});
+      this.wbandInput.setState({placeholder: null});
+      setTimeout(this.confirm, 100);
+    }
+  }
+
+  check_wband_found(data) {
+    this.wbandInput.setError();
+    this.wbandMessage.setCode('WRISTBAND_ALREADY_USED');
+    this.wbandInfo.setInfo(data);
+    this.wbandInput.setState({
+      placeholder: this.wbandInput.inputElement.value});
+    this.wbandInput.inputElement.value = '';
+  }
+
+  check_wband(success_callback, fail_callback) {
+    this.wbandInfo.setState({data: {wristband_code: this.wbandInput.inputElement.value}});
+    var url = GATE_API_URL + "/wristband/" + this.wbandInput.inputElement.value;
+    $.get(url, 'json')
+      .done(this.check_wband_found)
+      .fail(this.check_wband_not_found);
+  }
+
+  inputOnBlur (e) {
+    if (document.hasFocus()) {
+      if (e.target == this.qrcodeInput.inputElement) {
+        if (e.target.value == '') {
+          e.target.focus();
+        }
+        else {
+          this.check_qrcode();
+        }
+      }
+      else if (e.target == this.wbandInput.inputElement) {
+        if (e.target.value == '') {
+          this.clear();
+        }
+        else {
+          this.check_wband();
+        }
+      }
+    }
   }
 
   onKeyUp (e) {
@@ -396,6 +528,7 @@ class Gate extends React.Component {
       if ((e.target == this.wbandInput.inputElement) &&
           (this.wbandInput.inputElement.value != '')) {
         // check wristband
+        this.check_wband();
       }
     }
     else if (code == 8) {
@@ -410,7 +543,12 @@ class Gate extends React.Component {
             ref={(form) => { this.formElement = form; }}
             onKeyUp={this.onKeyUp}>
 
+          <p>
+            Para recomeçar a leitura: <kbd>BACKSPACE</kbd>
+          </p>
+
           <Input
+            onBlur={this.inputOnBlur}
             input_icon="qrcode"
             input_id="id_qrcode"
             label="QRCode"
@@ -425,29 +563,25 @@ class Gate extends React.Component {
             ref={(message) => { this.qrcodeMessage = message; }}
             />
 
-          { this.state.qrcode_alert ?
-              <Alert alert={this.state.qrcode_alert.alert}
-                title={this.state.qrcode_alert.title}
-                message={this.state.qrcode_alert.message} />
-            :
-            null
-          }
-
-          { (!this.state.qrcode_alert) && (this.state.access) ?
-              <div>
-                <Customer access={this.state.access} />
-                <Guest access={this.state.access} />
-              </div>
-            :
-            null
-          }
-
           <Input
+            onBlur={this.inputOnBlur}
             input_icon="user"
             input_id="id_wristband"
             label="Wristband"
             ref={(input) => { this.wbandInput = input; }}
             />
+
+          <WBandInfo
+            ref={(info) => { this.wbandInfo = info; }}
+            />
+
+          <Message
+            ref={(message) => { this.wbandMessage = message; }}
+            />
+
+            <a href="#">
+              {/*This element is here to handle TAB on the second input -->*/}
+            </a>
 
         </div>
     );
@@ -620,164 +754,6 @@ function Guest(props) {
     );
   else
     return null;
-}
-
-class OldAppContent extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.set_default_display();
-  }
-
-  componentWillMount() {
-
-    if (this.props.wristband)
-      this.load_wristband(this.props.wristband);
-
-    if (this.props.qrcode)
-      this.load_access(this.props.qrcode);
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
-    if (this.props.wristband != prevProps.wristband)
-      this.load_wristband(this.props.wristband);
-
-    if ((this.props.qrcode) && (this.props.qrcode != prevProps.qrcode))
-      this.load_access(this.props.qrcode);
-
-  }
-
-  ask() {
-
-    if ((this.state.qrcode_valid) && (this.state.wristband_valid)) {
-      if (confirm("Aperte ENTER para confirmar a entrada:")) {
-        var url = GATE_API_URL + "/entry/" + this.props.qrcode + "/";
-        var params = {wristband_code: this.props.wristband};
-
-        $.ajax({
-          type: "PUT",
-          url: url,
-          data: params,
-          headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-          },
-          success: function (data) {
-            alert("Entrada CONFIRMADA");
-            __gate_app.destroy().init();
-          },
-          dataType: 'json'
-        });
-
-      }
-      else {
-        __gate_app.destroy().init();
-      }
-    }
-
-    // __gate_app.input.qrcode = null;
-    // __gate_app.input.wristband = null;
-
-    // this.set_default_display();
-    // this.setState({
-    //     qrcode_valid: false,
-    //     wristband_valid: false,
-    //     qrcode: null,
-    //     wristband: null
-    // });
-
-  }
-
-  set_default_display() {
-    this.state = {
-      qrcode_input: {
-        has: 'warning',
-        placeholder: "Faça a leitura do QRCode !"
-      },
-      wristband_input: {
-        has: 'warning',
-        placeholder: "Faça a leitura da Pulseira !"
-      }
-    };
-  }
-
-  set_wristband_display(data, xhr) {
-    var has = 'success';
-    var placeholder = "Faça a leitura da Pulseira !";
-
-    if (data) {
-      has = 'error';
-      this.setState({
-        wristband_alert: {
-          alert: 'danger',
-          title: 'Pulseira!',
-          message: 'Esta Pulseira já foi usado às ' + data.entry_on + ' !'
-        }
-      });
-    }
-    else if (xhr) {
-    }
-
-    this.setState({
-      wristband_input: {
-        has: has,
-        placeholder: placeholder
-      }
-    });
-
-  }
-
-  load_wristband() {
-    var self = this;
-    var url = GATE_API_URL + "/wristband/" + this.props.wristband;
-
-    self.setState({
-      wristband_alert: null
-    });
-
-    $.get(url, 'json').done(function (data) {
-
-      self.setState({wristband: data})
-      self.set_wristband_display(data);
-
-    }).fail(function (xhr) {
-
-      // Wristband should be valid if fail (404)
-      self.setState({wristband_valid: xhr.status == 404});
-
-      self.ask();
-
-      self.set_wristband_display(null, xhr);
-
-    });
-  }
-
-  render() {
-    return (
-      <div>
-
-
-        { this.state.wristband_alert ?
-            <Alert alert={this.state.wristband_alert.alert}
-              title={this.state.wristband_alert.title}
-              message={this.state.wristband_alert.message} />
-          :
-          nul
-        }
-
-        { this.state.wristband_alert ?
-            <Alert alert={this.state.wristband_alert.alert}
-              title={this.state.wristband_alert.title}
-              message={this.state.wristband_alert.message} />
-          :
-          null
-        }
-
-      </div>
-    );
-  }
-
 }
 
 $(function () {
