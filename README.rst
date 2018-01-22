@@ -32,6 +32,8 @@ http://meeting-gate.readthedocs.io/en/latest/
 TOPICS
 ------
 
+TODO: meetin-gate jsx code needs to be splitted in modules, add require.js and etc.
+
 Our project Wristand is 10 character length, containing only numbers. Regular Expression: ^\d{10}$
 
 The reason there is not auth (API and Views) it's because we used the application

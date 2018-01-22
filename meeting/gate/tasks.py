@@ -13,6 +13,8 @@ def sync_wristband_wallet(wristband_code, entry_on, ticket, qrcode=None):
     }
     r = requests.put(url, sync)
 
+    print(url, r.status_code, sync)
+    print(r.json())
     if r.status_code != status.HTTP_200_OK:
         return None
 

@@ -60,7 +60,7 @@ class GuestTicketAdmin(admin.ModelAdmin):
     date_hierarchy = 'entry_on'
     list_display = ('person_name', 'person_document', 'list_name', 'uuid',
                     'wristband_code',
-                    'entry_on', 'wallet_id', )
+                    'entry_on', 'wallet_id', 'wallet_info')
     list_filter = ('entry_on', 'list_name', 'shop_created_on', )
     search_fields = ('=wristband_code', 'name', 'document', )
 

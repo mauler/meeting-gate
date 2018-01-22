@@ -31,7 +31,7 @@ class Wristband(BaseModel):
         blank=True,
         db_index=True,
         null=True,
-        max_length=10,
+        max_length=100,
         unique=True,
         verbose_name=_('Pulseira'),
         error_messages={'unique': WBAND_CODE_EXISTS}
@@ -49,6 +49,7 @@ class Wristband(BaseModel):
 
     wallet_info = models.TextField(blank=True)
 
+    # TODO: Move this to QRCode?
     shop_created_on = models.DateTimeField(verbose_name=_('Comprado em'),
                                            blank=True,
                                            null=True)
