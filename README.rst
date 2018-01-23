@@ -29,8 +29,18 @@ For more information, please check:
 
 http://meeting-gate.readthedocs.io/en/latest/
 
-TOPICS
-------
+
+CHANGELOG
+---------
+
+.. include:: CHANGELOG.rst
+
+
+
+DRAFT
+-----
+
+Contributing / Running tests: make test-browser // make test
 
 TODO: meetin-gate jsx code needs to be splitted in modules, add require.js and etc.
 
@@ -80,13 +90,11 @@ Testando navegador (Sem uso do Docker-compose)
 TODO
 ----
 
++ Changelog
 + Enable Pull Request interaction with Travis CI
-+ Create list of errors, use them on browser tests
 + Freeze vesions and upload to pypi
 + Docs for Models, Api, Install Instructions, Docker Image, pip install.
-+ Automated browser tests.
 + Run as standalone application.
 + Docker image available at DockerHub (Uploaded via TravisCI build).
 + Add .jsx processor
-+ Add django-compressor
-+ Refactory PaperTicket (Add batch insertion)
++ Split React JSX code in modules/imports
