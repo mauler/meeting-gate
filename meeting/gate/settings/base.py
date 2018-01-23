@@ -6,6 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 INSTALLED_APPS = [
     'meeting.gate',
 
+    'compressor',
     'bootstrap3',
     'rest_framework',
 
