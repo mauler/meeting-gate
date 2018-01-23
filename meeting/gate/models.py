@@ -1,8 +1,10 @@
+from django.db.models import signals
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
-from meeting.common.models import RawUUIDModel, BaseModel
+from meeting.common.models import RawUUIDModel, BaseModel, NamedBaseModel
 
 
 class PersonModel(models.Model):
@@ -84,7 +86,17 @@ class QRCode(Wristband, RawUUIDModel):
     qrcode_requires_identification = models.BooleanField(default=False)
 
 
+class BatchPaperTicket(NamedBaseModel):
+    first_line = models.PositiveIntegerField(default=1)
+    contents = models.TextField()
+
+
 class PaperTicket(QRCode):
+    batch = models.ForeignKey('BatchPaperTicket',
+                              blank=True,
+                              null=True,
+                              on_delete=models.SET_NULL)
+
     batch_name = models.CharField(
         max_length=100,
         verbose_name=_('Nome do Lote'),
@@ -98,6 +110,22 @@ class PaperTicket(QRCode):
         verbose_name = 'Ticket de Papel'
         verbose_name_plural = 'Tickets de Papel'
         ordering = ('-entry_on', 'shop_created_on', )
+
+
+@receiver(signals.post_save, sender=BatchPaperTicket)
+def create_paper_tickets(sender, instance, created, *args, **kwargs):
+    if created:
+        for line, uuid in enumerate(instance.contents.strip().split('\n'),
+                                    start=instance.first_line):
+            uuid = uuid.strip()
+            if uuid:
+                defaults = {
+                    'batch': instance,
+                    'batch_name': instance.name,
+                    'batch_line': line,
+                }
+                PaperTicket.objects.get_or_create(uuid=uuid,
+                                                  defaults=defaults)
 
 
 class WebTicket(QRCode, PersonModel):
