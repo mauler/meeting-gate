@@ -14,6 +14,14 @@ var GateApp = {
 
 };
 
+class MessageCode extends React.Component {
+  render() {
+    return (
+      <small>#{this.props.code}</small>
+    );
+  }
+}
+
 class RequiresIDInfo extends React.Component {
   render() {
     return (
@@ -31,6 +39,7 @@ class RequiresIDInfo extends React.Component {
           <dt>Documento (CPF ou RG)</dt>
           <dd>{this.props.info.guest_ticket.person_document}</dd>
         </dl>
+        <MessageCode code="QRCODE_REQUIRES_IDENTIFICATION" />
       </div>
     );
   }
@@ -167,6 +176,7 @@ class Input extends React.Component {
             ref={(input) => { this.inputElement = input; }}
             type="text"
             className="form-control"
+            name={this.props.input_name}
             id={this.props.input_id}
             aria-describedby={this.input_status_id}
             placeholder={this.state.placeholder}
@@ -333,7 +343,15 @@ class Message extends React.Component {
 
   setCode(message_code, ) {
 
-    if (message_code == 'WRISTBAND_ALREADY_USED') {
+    if (message_code == 'QRCODE_VALID') {
+      this.setState({
+        code: message_code,
+        alert: 'success',
+        title: 'QRCode válido!',
+        message: 'QRCOde válido, siga as instruções.'
+      });
+    }
+    else if (message_code == 'WRISTBAND_ALREADY_USED') {
       this.setState({
         code: message_code,
         alert: 'danger',
@@ -372,7 +390,7 @@ class Message extends React.Component {
           <p>
             {this.state.message}
           </p>
-          <strong>{this.state.code}</strong>
+          <MessageCode code={this.state.code} />
         </div>
       );
     }
@@ -450,7 +468,7 @@ class Gate extends React.Component {
   check_qrcode_found(data) {
     if (! data.wristband_code) {
       this.qrcodeInput.setSuccess();
-      this.qrcodeMessage.setCode(null);
+      this.qrcodeMessage.setCode('QRCODE_VALID');
       this.wbandInput.inputElement.focus();
     }
     else {
@@ -551,6 +569,7 @@ class Gate extends React.Component {
             onBlur={this.inputOnBlur}
             input_icon="qrcode"
             input_id="id_qrcode"
+            input_name="qrcode"
             label="QRCode"
             ref={(input) => { this.qrcodeInput = input; }}
             />
@@ -567,6 +586,7 @@ class Gate extends React.Component {
             onBlur={this.inputOnBlur}
             input_icon="user"
             input_id="id_wristband"
+            input_name="wristband"
             label="Wristband"
             ref={(input) => { this.wbandInput = input; }}
             />
