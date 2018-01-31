@@ -2,6 +2,14 @@
 Installation instructions
 =========================
 
+
+Via PIP
+-------
+
++ Add to installed apps
++ Add Urls
++ settings FESTIVAL_API_URL SHOP_API_URL
+
 meeting can be installed using pip::
 
     $ python -m pip install meeting

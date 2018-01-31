@@ -1,0 +1,5 @@
+sphinxcontrib-django
+
+sphinx
+sphinx-autobuild
+

@@ -30,71 +30,29 @@ For more information, please check:
 http://meeting-gate.readthedocs.io/en/latest/
 
 
-CHANGELOG
----------
+About
+=====
 
-.. include:: CHANGELOG.rst
+This application aims to manage the access control on cashless festivals (or other compatible kind of meeting) via Tickets (Scanning previous generated QRCodes)
+and update this information over the other systems such any Cashless Sells Application prepared to handle the data.
 
-
-
-DRAFT
------
-
-Contributing / Running tests: make test-browser // make test
-
-TODO: meetin-gate jsx code needs to be splitted in modules, add require.js and etc.
-
-Our project Wristand is 10 character length, containing only numbers. Regular Expression: ^\d{10}$
-
-The reason there is not auth (API and Views) it's because we used the application
-on a private local area network, no internet connection or outside access. Actually most of the time totally offline since the festival gate was in a farm gate.
-
-Caso de Uso (Procurar README de projetos similares e olhar os tópicos)
-
-Como o sistema comunica com outros 2
-
-História, Foi criado para controlar entrada do meeting-festival
-
-Ele lê tickets do meeting-shop porém é possível usar tickets de outros sistemas
-
-Formas de instalação do sistema
-
-Instalar via pip e executar sem um projeto
-
-Instalar via pip no seu projeto existente
-
-Instalar e testar por imagem do dockerhub
-
-Carregando WebTickets, meeting-shop e ou/outro sistema
-
-Carregando LocalTickets/Lote (Recriar a aplicação)
-
-Frontend de Leitura de QRCodes (origundos do meeting-shop ou não)
-formato atual configurado de pulseira
-
-Possíveis erros
-
-Rotina para atualizar a Wristband no meeting-gate
-
-O uso do admin
-
-API dos Models
-
-Como Contribuir
-
-Usando o docker-compose para testar, testando o navegador também
-
-Testando navegador (Sem uso do Docker-compose)
+For more information of how to use this Application, check the Cases of Use & Setup section in Docs.
 
 
-TODO
-----
+How it Works ?
+--------------
 
-+ Changelog
-+ Enable Pull Request interaction with Travis CI
-+ Freeze vesions and upload to pypi
-+ Docs for Models, Api, Install Instructions, Docker Image, pip install.
-+ Run as standalone application.
-+ Docker image available at DockerHub (Uploaded via TravisCI build).
-+ Add .jsx processor
-+ Split React JSX code in modules/imports
+First the application need to be fed with the Tickets data, the kinds supported: bought via e-commerce, paper tickets, guest invite or local (sell on the event entrance).
+
+With the ticket data loaded the dashboard can be accessed to begin the ticket
+validation system.
+
+The common usage is:
+
+1. Read the Ticket QRCODE.
+2. Check if it is valid.
+3. Ask the person documentation if the Ticket type requires it.
+4. Read the Wrsitband
+5. Confirm the entrance
+
+After the Entry is confirmed, the data is sent to the cashless application.
