@@ -30,7 +30,7 @@ class TicketSerializer(serializers.ModelSerializer):
     guest_ticket = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ['shop_created_on',
+        fields = ['shop_purchase_date',
                   'web_ticket',
                   'paper_ticket',
                   'guest_ticket',
