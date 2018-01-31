@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'meeting.gate',
 
+    'compressor',
     'bootstrap3',
     'rest_framework',
 
