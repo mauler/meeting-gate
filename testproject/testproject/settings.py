@@ -1,3 +1,5 @@
+STATIC_ROOT = 'static'
+
 FESTIVAL_API_URL = 'http://festival.api.com/v1/api'
 
 """
