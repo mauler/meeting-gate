@@ -24,8 +24,8 @@ meeting-gate
         :alt: Scrutinizer Code Quality
 
 
-This is Meeting Project entrace management application (know as meeting-gate-gate).
-For more information, please check:
+This is Meeting Project entrace management application (know as meeting-gate).
+For complete instructions and more information, please check:
 
 http://meeting-gate.readthedocs.io/en/latest/
 
@@ -33,8 +33,9 @@ http://meeting-gate.readthedocs.io/en/latest/
 About
 =====
 
-This application aims to manage the access control on cashless festivals (or other compatible kind of meeting) via Tickets (Scanning previous generated QRCodes)
-and update this information over the other systems such any Cashless Sells Application prepared to handle the data.
+This application focuses on managing festival accreditment that make use of identification methods such as bracelets or cards (rfid, qrcode) for access control or cashless sales.
+
+The accreditation is controlled through tickets, e-tickets and pre-generated invitations, which can also be imported from other applications.
 
 For more information of how to use this Application, check the Cases of Use & Setup section in Docs.
 
@@ -42,17 +43,23 @@ For more information of how to use this Application, check the Cases of Use & Se
 How it Works ?
 --------------
 
-First the application need to be fed with the Tickets data, the kinds supported: bought via e-commerce, paper tickets, guest invite or local (sell on the event entrance).
+The application needs to be fed with the tickets data, the supported kind of tickets are:
 
-With the ticket data loaded the dashboard can be accessed to begin the ticket
-validation system.
++ Web Tickets (E-Commerce)
++ Paper Tickets (Classic printed)
++ Guest Invite (Requires document udentification)
++ Local sell
 
-The common usage is:
+This data can be loaded using: REST calls to other applications, direct database
+inserts, insert via admin interface. How it will be inserted depends your event
+case of use, check the Cases of Use & Setup section in Docs.
 
-1. Read the Ticket QRCODE.
-2. Check if it is valid.
-3. Ask the person documentation if the Ticket type requires it.
-4. Read the Wrsitband
-5. Confirm the entrance
+After the data is prepared, the dashboard operation workflow is:
 
-After the Entry is confirmed, the data is sent to the cashless application.
+1. Someone reads the Ticket QRCODE using a device.
+2. The application check if it is a valid one.
+3. If necessary asks the operator to verify the ticket owner documentation if the Ticket type requires it.
+4. The operator reads a new Wristband or card to attached to this ticket.
+5. The operator confirms the Entry.
+
+After the entrance is confirmed, the data is sent to the cashless or access control application (If enabled).

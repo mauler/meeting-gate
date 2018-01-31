@@ -3,16 +3,12 @@ Installation instructions
 =========================
 
 
-Via PIP
--------
+Using PIP
+=========
 
-+ Add to installed apps
-+ Add Urls
-+ settings FESTIVAL_API_URL SHOP_API_URL
+meeting-gate can be installed using pip::
 
-meeting can be installed using pip::
-
-    $ python -m pip install meeting
+    $ python -m pip install meeting-gate
 
 This command will fetch the archive and its dependencies from the internet and
 install them.
@@ -24,6 +20,29 @@ If you've downloaded the tarball, unpack it, and execute::
 You might prefer to install it as system-wide. In this case, skip the ``--user``
 option and execute as superuser by prepending the command with ``sudo``.
 
+
+Adding into a existing Project
+------------------------------
+
++ Add **meeting.gate** app and it dependencies to `INSTALLED_APPS` settings value:
+
+.. code::
+
+  INSTALLED_APPS = [
+        # meeting-gate required apps
+        'meeting.gate',
+        'compressor',
+        'bootstrap3',
+        'rest_framework',
+  ]
+
++ Add **meeting.gate.urls** module to your project urls:
+
+.. code::
+
+    urlpatterns = [
+        url(r'', include('meeting.gate.urls', namespace='meeting-gate')),
+    ]
 
 Troubleshoot
 ------------
