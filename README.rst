@@ -52,7 +52,7 @@ The application needs to be fed with the tickets data, the supported kind of tic
 
 This data can be loaded using: REST calls to other applications, direct database
 inserts, insert via admin interface. How it will be inserted depends your event
-case of use, check the Cases of Use & Setup section in Docs.
+case of use, check the :doc:`../use-cases-and-setup` section.
 
 After the data is prepared, the dashboard operation workflow is:
 

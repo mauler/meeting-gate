@@ -28,20 +28,24 @@ Adding into a existing Project
 
 .. code::
 
-  INSTALLED_APPS = [
+    INSTALLED_APPS = [
+
         # meeting-gate required apps
         'meeting.gate',
         'compressor',
         'bootstrap3',
         'rest_framework',
-  ]
+
+    ]
 
 + Add **meeting.gate.urls** module to your project urls:
 
 .. code::
 
     urlpatterns = [
+
         url(r'', include('meeting.gate.urls', namespace='meeting-gate')),
+
     ]
 
 Troubleshoot

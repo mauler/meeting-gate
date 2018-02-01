@@ -1,8 +1,8 @@
-=============
-API Reference
-=============
+===================
+Model API Reference
+===================
 
-API documentation for the meeting-gate module.
+Model API documentation for the **meeting.gate.models** module.
 
 .. automodule:: meeting.gate.models
    :members:
