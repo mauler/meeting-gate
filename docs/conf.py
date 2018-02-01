@@ -62,7 +62,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'meeting'
+project = 'meeting-gate'
 project_title = project.title()
 author = 'Paulo R'
 copyright = '2018, %s' % author
