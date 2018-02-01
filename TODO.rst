@@ -8,7 +8,7 @@ The current development (TODO) roadmap:
 + Cookbook: docker-compose services.
 + Add .jsx processor
 + Split React JSX code in modules/imports
-+ Freeze vesions and upload to pypi
++ Freeze versions and upload to pypi
 + Enable Pull Request interaction with Travis CI
 + Run the project demo without a existing project
 

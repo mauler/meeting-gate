@@ -16,7 +16,7 @@ Topics
 
    Installation instructions <install.rst>
    Using the application <application.rst>
-   Cases of Use & Setup <use-cases-and-setup.rst>
+   Use cases & setup <use-cases-and-setup.rst>
    Model API documentation <apidoc.rst>
    Roadmap <roadmap.rst>
    Contributing <contributing.rst>

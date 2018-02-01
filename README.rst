@@ -24,7 +24,7 @@ meeting-gate
         :alt: Scrutinizer Code Quality
 
 
-This is Meeting Project entrace management application (know as meeting-gate).
+This is Meeting Project entrance management application (know as meeting-gate).
 For complete instructions and more information, please check:
 
 http://meeting-gate.readthedocs.io/en/latest/
@@ -33,7 +33,7 @@ http://meeting-gate.readthedocs.io/en/latest/
 About
 =====
 
-This application focuses on managing festival accreditment that make use of identification methods such as bracelets or cards (rfid, qrcode) for access control or cashless sales.
+This application focuses on managing festival attendee accreditation that make use of identification methods such as bracelets or cards (rfid, qrcode) for access control or cashless sales.
 
 The accreditation is controlled through tickets, e-tickets and pre-generated invitations, which can also be imported from other applications.
 
@@ -47,12 +47,12 @@ The application needs to be fed with the tickets data, the supported kind of tic
 
 + Web Tickets (E-Commerce)
 + Paper Tickets (Classic printed)
-+ Guest Invite (Requires document udentification)
++ Guest Invite (Requires document identification)
 + Local sell
 
 This data can be loaded using: REST calls to other applications, direct database
 inserts, insert via admin interface. How it will be inserted depends your event
-case of use, check the :doc:`../use-cases-and-setup` section.
+case of use, check the :doc:`/use-cases-and-setup` section.
 
 After the data is prepared, the dashboard operation workflow is:
 
