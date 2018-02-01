@@ -15,10 +15,9 @@ Topics
    :maxdepth: 2
 
    Installation instructions <install.rst>
-   Application <application.rst>
-   Cases of Use & Setup <use-cases-setup.rst>
-   FAQ <faq.rst>
-   API documentation <apidoc.rst>
+   Using the application <application.rst>
+   Cases of Use & Setup <use-cases-and-setup.rst>
+   Model API documentation <apidoc.rst>
    Roadmap <roadmap.rst>
    Contributing <contributing.rst>
    License <license.rst>
